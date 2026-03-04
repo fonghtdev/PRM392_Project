@@ -9,6 +9,13 @@ set(BINARY_NAME "prm392_supermarket_management")
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.
 cmake_policy(VERSION 3.14...3.25)
+if(POLICY CMP0175)
+  # webview_windows still uses DEPENDS with add_custom_command(TARGET ...),
+  # so keep legacy behavior to avoid dev warnings on newer CMake.
+  cmake_policy(SET CMP0175 OLD)
+endif()
+set(CMAKE_POLICY_DEFAULT_CMP0175 OLD)
+set(CMAKE_SUPPRESS_DEVELOPER_WARNINGS 1 CACHE INTERNAL "No dev warnings")
 
 # Define build configuration option.
 get_property(IS_MULTICONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
